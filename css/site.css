@@ -60,7 +60,7 @@ h6 {
 	padding: 10px 15px;
 }
 #countryModal .modal-dialog {
-	width: 1040px;
+	width: 900px;
 }
 #countryModal .modal-body {
 	max-height: 800px;
@@ -96,14 +96,19 @@ h6 {
 }
 .info-labels {
 	padding-top: 4px;
+	text-align: right;
 	text-transform: capitalize;
 }
 .info .c3-chart-arc text {
 	display: none;
 }
+.info {
+	padding-top: 30px;
+}
 .info .cooking,
 .info .lighting {
 	padding-top: 10px;
+	text-align: left;
 }
 #legend ul {
 	font-size: 12px;
@@ -137,9 +142,6 @@ h6 {
 	padding-bottom: 12px;
 	border-bottom: 1px solid #ccc;
 }
-.overview-lighting {
-	padding-top: 20px;
-}
 
 #defintions {
 	display:none;
@@ -150,6 +152,7 @@ h6 {
 }
 
 .footnote {
+	font-style: italic;
 	font-size: 0.9em;
 	margin-top: 40px;
 }
@@ -161,6 +164,9 @@ h6 {
 	font-size: 0.9em;
 	font-style: italic;
 	padding-top: 9px;
+}
+.cooking-pie svg{
+	transform: translateX(-50%);
 }
 
 @media only screen and (max-width: 768px) {
@@ -192,5 +198,8 @@ h6 {
 	.overview-lighting,
 	.overview-cooking {
 		margin-bottom: 0px;
+	}
+	.info-labels {
+		text-align: center;
 	}
 }
