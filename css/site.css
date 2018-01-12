@@ -95,7 +95,7 @@ h6 {
 	padding-bottom: 12px;
 }
 .info-labels {
-	padding-top: 4px;
+	padding-top: 10px;
 	text-align: right;
 	text-transform: capitalize;
 }
@@ -140,7 +140,7 @@ h6 {
 }
 .divider {
 	padding-bottom: 12px;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 #defintions {
@@ -167,6 +167,9 @@ h6 {
 }
 .cooking-pie svg{
 	transform: translateX(-50%);
+}
+.camp .position-arcs  {
+	transform: translate(92%,57%) !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -201,5 +204,22 @@ h6 {
 	}
 	.info-labels {
 		text-align: center;
+	}
+	.modal-header {
+		min-height: 70px;
+	}
+	#maincontent {
+		width: 100%;
+	}
+	.form-link {
+		padding-top: 0;
+	}
+	.exp-total h6 {
+		min-height: 39px;
+	}
+	.camp svg > rect {
+		width: 50px;
+		height: 50px;
+		y: 10px;
 	}
 }
