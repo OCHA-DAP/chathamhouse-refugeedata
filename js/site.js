@@ -235,6 +235,12 @@ function buildPieChart(title, data, height, showLegend=true) {
                 }
             }
         },
+        onrendered: function() {
+            d3.selectAll('.camp .c3-chart-arcs').each(function() {
+                if ($(window).width() >= 768)
+                    d3.select(this).attr('transform', 'translate(57,33)');
+            });
+        },
         size: { height: height },
         //color: { pattern: pieColors[clrs] },
         pie: {
