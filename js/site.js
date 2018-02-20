@@ -402,6 +402,16 @@ function getCountryNames(datasets) {
     return output;
 }
 
+function getParamValue(paramName) {
+    var url = window.location.search.substring(1); 
+    var qArray = url.split('&'); 
+    for (var i=0; i<qArray.length; i++) {
+        var pArr = qArray[i].split('='); 
+        if (pArr[0] == paramName) 
+            return pArr[1]; 
+    }
+}
+
 let numFormat = function(d){return d3.format('.2f')(d)};
 let numFormat2 = function(d){return d3.format('.3f')(d)};
 let numFormatSF = function(d){return d3.format('.2g')(d)};
@@ -455,6 +465,10 @@ $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(da
     countryNames = getCountryNames([nonCampData, largeCampData]);
     cookingPerCountry = getCookingPerCountry(countryNames, nonCampData, largeCampData);
     datasetDate = datasetArgs[0].result.dataset_date
+
+    //check value of viz description in url parameter -- hide by default
+    var showDescription = getParamValue('showDescription');
+    if (showDescription=='true') $('.viz-description').show();
 
     countryOverview = function(iso3) {
         let lighting = {};
