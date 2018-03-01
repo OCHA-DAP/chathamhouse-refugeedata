@@ -412,6 +412,19 @@ function getParamValue(paramName) {
     }
 }
 
+function formatDate(date) {
+    var monthArray = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var d = date.split('/');
+    var m = d[0];
+    if (d[0].length>1) { //check for leading 0
+        var m = d[0].split('');
+        m = (m[0]=='0') ? m[1] : d[0];
+    }
+    d = d[1] + ' ' + monthArray[m-1] + ' ' + d[2];
+    return d;
+}
+
+
 let numFormat = function(d){return d3.format('.2f')(d)};
 let numFormat2 = function(d){return d3.format('.3f')(d)};
 let numFormatSF = function(d){return d3.format('.2g')(d)};
@@ -464,7 +477,7 @@ $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(da
     refugeePopData = getRefugeesPerCountry(popData);
     countryNames = getCountryNames([nonCampData, largeCampData]);
     cookingPerCountry = getCookingPerCountry(countryNames, nonCampData, largeCampData);
-    datasetDate = datasetArgs[0].result.dataset_date
+    datasetDate = formatDate(datasetArgs[0].result.dataset_date);
 
     //check value of viz description in url parameter -- hide by default
     var showDescription = getParamValue('showDescription');
