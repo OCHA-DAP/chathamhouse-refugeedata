@@ -174,13 +174,14 @@ function buildModalOverview(iso3, cooking, lighting) {
     lightingChart = buildPieChart('lighting', lightingData, 200);
 }
 
-function buildModalInfo(camp, type='camp') {
+function buildModalInfo(camp, type) {
     let expTotalCooking = 0;
     let expTotalLighting = 0;
     let campCls = 'camp'+camp.id;
     let cookingChartID = 'cooking'+camp.id+'Chart';
     let lightingChartID = 'lighting'+camp.id+'Chart';
     let modal = $('#countryModal');
+    if (type===undefined || type!=='') type='camp';
 
     //cooking
     let cookingData = [];
@@ -219,7 +220,8 @@ function buildModalInfo(camp, type='camp') {
     charts.push(lightingChart);
 }
 
-function buildPieChart(title, data, height, showLegend=true) {
+function buildPieChart(title, data, height, showLegend) {
+    if (showLegend===undefined || showLegend!=='') showLegend=true;
     let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
     let chart = c3.generate({
         bindto: '#'+title+'Chart',
@@ -259,7 +261,7 @@ function buildPieChart(title, data, height, showLegend=true) {
     return chart;
 }
 
-function buildSquareChart(title, data, height, showLegend=true){
+function buildSquareChart(title, data, height){
     let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
     let svgContainer = d3.select('#'+title+'Chart').append("svg")
         .attr("width", height)
@@ -280,7 +282,8 @@ function buildSquareChart(title, data, height, showLegend=true){
             });
 }
 
-function buildDonutChart(title, data, height, showLegend=true) {
+function buildDonutChart(title, data, height, showLegend) {
+    if (showLegend===undefined || showLegend!=='') showLegend=true;
     let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
     let chart = c3.generate({
         bindto: '#'+title+'Chart',
