@@ -1,26 +1,26 @@
-let datasetURL = 'https://data.humdata.org/api/action/package_show?id=energy-consumption-of-refugees-and-displaced-people';
-let urbanURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/599be5e3-35ad-4352-8fa8-377b085ab861/download/urban_consumption.csv');
-let slumURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/a3d57e6c-627a-4279-b5d7-06d6d1e16f8c/download/slum_consumption.csv');
-let ruralURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/061b343d-6fd8-4505-97f2-9ebd46728968/download/rural_consumption.csv');
-let nonCampURL = 'https://data.humdata.org/hxlproxy/data.json?filter01=add&add-tag01=%23indicator%2Blocation&add-value01=urban&filter02=append&append-dataset02-01='+slumURL+'&filter03=replace&replace-pattern03=%5E%24&replace-regex03=on&replace-value03=slum&replace-tags03=%23indicator%2Blocation&filter04=append&append-dataset04-01='+ruralURL+'&filter05=replace&replace-pattern05=%5E%24&replace-regex05=on&replace-value05=rural&replace-tags05=%23indicator%2Blocation&filter06=select&select-query06-01=%23indicator%2Btier%3DBaseline&strip-headers=on&url='+urbanURL;
+var datasetURL = 'https://data.humdata.org/api/action/package_show?id=energy-consumption-of-refugees-and-displaced-people';
+var urbanURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/599be5e3-35ad-4352-8fa8-377b085ab861/download/urban_consumption.csv');
+var slumURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/a3d57e6c-627a-4279-b5d7-06d6d1e16f8c/download/slum_consumption.csv');
+var ruralURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/061b343d-6fd8-4505-97f2-9ebd46728968/download/rural_consumption.csv');
+var nonCampURL = 'https://data.humdata.org/hxlproxy/data.json?filter01=add&add-tag01=%23indicator%2Blocation&add-value01=urban&filter02=append&append-dataset02-01='+slumURL+'&filter03=replace&replace-pattern03=%5E%24&replace-regex03=on&replace-value03=slum&replace-tags03=%23indicator%2Blocation&filter04=append&append-dataset04-01='+ruralURL+'&filter05=replace&replace-pattern05=%5E%24&replace-regex05=on&replace-value05=rural&replace-tags05=%23indicator%2Blocation&filter06=select&select-query06-01=%23indicator%2Btier%3DBaseline&strip-headers=on&url='+urbanURL;
 
-let campURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/54992e56-7918-4c05-84b2-2a7bef4f95cd/download/camp_consumption.csv');
-let largeCampsURL = 'https://data.humdata.org/hxlproxy/data.json?filter01=select&select-query01-01=%23indicator%2Btier%3DBaseline&strip-headers=on&url='+campURL;
-let smallCampsURL = '';
+var campURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/54992e56-7918-4c05-84b2-2a7bef4f95cd/download/camp_consumption.csv');
+var largeCampsURL = 'https://data.humdata.org/hxlproxy/data.json?filter01=select&select-query01-01=%23indicator%2Btier%3DBaseline&strip-headers=on&url='+campURL;
+var smallCampsURL = '';
 
-let popURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/f085427c-9fc7-4651-a0dd-228ce9147f58/download/population.csv');
+var popURL = encodeURIComponent('https://data.humdata.org/dataset/dc9da294-26af-4f22-9f0c-8acfb0cdf17e/resource/f085427c-9fc7-4651-a0dd-228ce9147f58/download/population.csv');
 popURL = 'https://data.humdata.org/hxlproxy/data.json?strip-headers=on&url='+popURL;
 
 function hxlProxyToJSON(input){
-    let output = [];
-    let keys=[]
+    var output = [];
+    var keys=[]
     input.forEach(function(e,i){
         if(i==0){
             e.forEach(function(e2,i2){
-                let parts = e2.split('+');
-                let key = parts[0]
+                var parts = e2.split('+');
+                var key = parts[0]
                 if(parts.length>1){
-                    let atts = parts.splice(1,parts.length);
+                    var atts = parts.splice(1,parts.length);
                     atts.sort();                    
                     atts.forEach(function(att){
                         key +='+'+att
@@ -29,7 +29,7 @@ function hxlProxyToJSON(input){
                 keys.push(key);
             });
         } else {
-            let row = {};
+            var row = {};
             e.forEach(function(e2,i2){
                 row[keys[i2]] = e2;
             });
@@ -43,8 +43,8 @@ function generateMap(geom,cookingPerCountry) {
     //remove loader
     $('.sp-circle').remove();
 
-    let baselayer = L.tileLayer('https://data.humdata.org/mapbox-base-tiles/{z}/{x}/{y}.png', {});
-    let labels = L.tileLayer('https://data.humdata.org/mapbox-layer-tiles/{z}/{x}/{y}.png', {minZoom: 2, pane: 'labels'});
+    var baselayer = L.tileLayer('https://data.humdata.org/mapbox-base-tiles/{z}/{x}/{y}.png', {});
+    var labels = L.tileLayer('https://data.humdata.org/mapbox-layer-tiles/{z}/{x}/{y}.png', {minZoom: 2, pane: 'labels'});
 
     map = L.map('map',{
         center: [0,0],
@@ -54,17 +54,17 @@ function generateMap(geom,cookingPerCountry) {
 
     map.createPane('labels');
 
-    let cls;
-    let style = function(feature) {
-        let clr = '#aaaaaa';
-        let borderClr = '#f2f2ef';
-        let fillClr = '#08306b';
-        let fillOpacity = 0;
+    var cls;
+    var style = function(feature) {
+        var clr = '#aaaaaa';
+        var borderClr = '#f2f2ef';
+        var fillClr = '#08306b';
+        var fillOpacity = 0;
         cls = 'country';
 
-        let iso3 = feature.properties['ISO_3'];
+        var iso3 = feature.properties['ISO_3'];
         if (iso3!=null) {
-            let type = cookingPerCountry[iso3];
+            var type = cookingPerCountry[iso3];
             if (type!=undefined) {
                 clr = cookingColors[type];
                 fillOpacity = 0.7;
@@ -104,15 +104,15 @@ function generateMap(geom,cookingPerCountry) {
 }
 
 function generateMapLegend() {
-    let legend = $('#mapLegend');
+    var legend = $('#mapLegend');
     legend.append('<h5>Cooking Fuel Source</h5><ul></ul>');
-    for (let key in cookingColors) {
+    for (var key in cookingColors) {
         legend.find('ul').append('<li><div class="color" style="background-color:' + cookingColors[key] + '"></div> ' + key + '</li>');
     }
 }
 
 function mapClick(e) {
-    let iso3 = e.target.feature.properties['ISO_3'];
+    var iso3 = e.target.feature.properties['ISO_3'];
     countryOverview(iso3);
     $('#countryModal').modal('show');
 
@@ -131,10 +131,10 @@ function mapClick(e) {
 }
 
 function buildModalOverview(iso3, cooking, lighting) {
-    let expTotalCooking = 0;
-    let expTotalLighting = 0;
-    let popTotal = refugeePopData[iso3];
-    let modal = $('#countryModal');
+    var expTotalCooking = 0;
+    var expTotalLighting = 0;
+    var popTotal = refugeePopData[iso3];
+    var modal = $('#countryModal');
 
     //pre-populate feedback form link
     setFormLink(countryNames[iso3]);
@@ -150,15 +150,15 @@ function buildModalOverview(iso3, cooking, lighting) {
     modal.find('.overview-population span').text(popFormat(popTotal));
     
     //cooking
-    let cookingData = [];
-    for (let prop in cooking) {
+    var cookingData = [];
+    for (var prop in cooking) {
         expTotalCooking = (cooking[prop]==undefined) ? expTotalCooking : expTotalCooking + cooking[prop];
         cookingData.push([prop, numFormatSF(cooking[prop])]);
     }
 
     //lighting
-    let lightingData = [];
-    for (let prop in lighting) {
+    var lightingData = [];
+    for (var prop in lighting) {
         expTotalLighting = (lighting[prop]==undefined) ? expTotalLighting : expTotalLighting + lighting[prop];
         lightingData.push([prop, numFormatSF(lighting[prop])]);
     }
@@ -175,24 +175,24 @@ function buildModalOverview(iso3, cooking, lighting) {
 }
 
 function buildModalInfo(camp, type) {
-    let expTotalCooking = 0;
-    let expTotalLighting = 0;
-    let campCls = 'camp'+camp.id;
-    let myCookingChartID = 'cooking'+camp.id+'Chart';
-    let myLightingChartID = 'lighting'+camp.id+'Chart';
-    let modal = $('#countryModal');
+    var expTotalCooking = 0;
+    var expTotalLighting = 0;
+    var campCls = 'camp'+camp.id;
+    var myCookingChartID = 'cooking'+camp.id+'Chart';
+    var myLightingChartID = 'lighting'+camp.id+'Chart';
+    var modal = $('#countryModal');
     if (type===undefined || type!=='') type='camp';
 
     //cooking
-    let cookingData = [];
-    for (let key in camp.cooking) {
+    var cookingData = [];
+    for (var key in camp.cooking) {
         expTotalCooking = (camp.cooking[key]==undefined) ? expTotalCooking : expTotalCooking + camp.cooking[key];
         cookingData.push([key, numFormatSF(camp.cooking[key])]);
     }
 
     //lighting
-    let lightingData = [];
-    for (let key in camp.lighting) {
+    var lightingData = [];
+    for (var key in camp.lighting) {
         expTotalLighting = (camp.lighting[key]==undefined) ? expTotalLighting : expTotalLighting + camp.lighting[key];
         lightingData.push([key, numFormatSF(camp.lighting[key])]);
     }
@@ -204,7 +204,7 @@ function buildModalInfo(camp, type) {
     modal.find('.'+campCls+' .lighting').html( 'Exp/yr: $'+numFormat2(expTotalLighting)+'M<br>Per Cap: '+ getExpPerCapita(expTotalLighting, camp.pop) +'<br>Pop: '+ popFormat(camp.pop) );
 
     //pie/donut charts
-    let cookChart, lightChart;
+    var cookChart, lightChart;
     if (type=='camp') {
         cookChart = buildSquareChart('cooking'+camp.id, cookingData, 70, false);
         lightChart = buildSquareChart('lighting'+camp.id, lightingData, 70, false);
@@ -222,8 +222,8 @@ function buildModalInfo(camp, type) {
 
 function buildPieChart(title, data, height, showLegend) {
     if (showLegend===undefined || showLegend!=='') showLegend=true;
-    let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
-    let chart = c3.generate({
+    var clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
+    var chart = c3.generate({
         bindto: '#'+title+'Chart',
         data: {
             columns: data,
@@ -262,12 +262,12 @@ function buildPieChart(title, data, height, showLegend) {
 }
 
 function buildSquareChart(title, data, height){
-    let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
-    let svgContainer = d3.select('#'+title+'Chart').append("svg")
+    var clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
+    var svgContainer = d3.select('#'+title+'Chart').append("svg")
         .attr("width", height)
         .attr("height", height);
-    let d = data[0][0];
-    let rectangle = svgContainer.append("rect")
+    var d = data[0][0];
+    var rectangle = svgContainer.append("rect")
         .attr("x", 0)
         .attr("y", 0)
         .attr("width", height)
@@ -284,8 +284,8 @@ function buildSquareChart(title, data, height){
 
 function buildDonutChart(title, data, height, showLegend) {
     if (showLegend===undefined || showLegend!=='') showLegend=true;
-    let clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
-    let chart = c3.generate({
+    var clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
+    var chart = c3.generate({
         bindto: '#'+title+'Chart',
         data: {
             columns: data,
@@ -318,10 +318,10 @@ function buildDonutChart(title, data, height, showLegend) {
 }
 
 function buildLegend() {
-    let legend = $('#countryModal').find('#legend');
-    for (let pie in pieColors) {
-        let leg = legend.find('.'+pie+'Legend ul');
-        for (let color in pieColors[pie]) {
+    var legend = $('#countryModal').find('#legend');
+    for (var pie in pieColors) {
+        var leg = legend.find('.'+pie+'Legend ul');
+        for (var color in pieColors[pie]) {
             leg.append('<li><div class="square" style="background-color:' + pieColors[pie][color] + '"></div> ' + color + '</li>');
         }
     }
@@ -339,9 +339,9 @@ function getExpPerCapita(total, pop) {
 }
 
 function getRefugeesPerCountry(dataset){
-    let output = {};
+    var output = {};
     dataset.forEach(function(row){
-        let country = row['#country+code'];
+        var country = row['#country+code'];
         if(output[country]===undefined){
             output[country] = Math.round(Number(row['#population+num']));
         } else {
@@ -352,9 +352,9 @@ function getRefugeesPerCountry(dataset){
 }
 
 function getCookingPerCountry(countries, nonCampData, largeCampData){
-    let output = {};
+    var output = {};
     for (var country in countries) {
-        let cooking = {};
+        var cooking = {};
         nonCampData.forEach(function(row){
             if(row['#country+code']===country){
                 key = 'LPG/Natural Gas';
@@ -396,7 +396,7 @@ function getCookingPerCountry(countries, nonCampData, largeCampData){
 }
 
 function getCountryNames(datasets) {
-    let output = [];
+    var output = [];
     datasets.forEach(function(dataset){
         dataset.forEach(function(row){
             output[row['#country+code']] = row['#country+name'];
@@ -428,55 +428,55 @@ function formatDate(date) {
 }
 
 
-let numFormat = function(d){return d3.format('.2f')(d)};
-let numFormat2 = function(d){return d3.format('.3f')(d)};
-let numFormatSF = function(d){return d3.format('.2g')(d)};
-let popFormat = d3.format('.2s');
+var numFormat = function(d){return d3.format('.2f')(d)};
+var numFormat2 = function(d){return d3.format('.3f')(d)};
+var numFormatSF = function(d){return d3.format('.2g')(d)};
+var popFormat = d3.format('.2s');
 
 
-let datasetCall = $.ajax({ 
+var datasetCall = $.ajax({ 
     type: 'GET', 
     url: datasetURL,
     dataType: 'json',
 });
 
-let nonCampCall = $.ajax({ 
+var nonCampCall = $.ajax({ 
     type: 'GET', 
     url: nonCampURL,
     dataType: 'json',
 });
 
-let largeCampCall = $.ajax({ 
+var largeCampCall = $.ajax({ 
     type: 'GET', 
     url: largeCampsURL,
     dataType: 'json',
 });
 
-let popCall = $.ajax({ 
+var popCall = $.ajax({ 
     type: 'GET', 
     url: popURL,
     dataType: 'json',
 });
 
-let geomCall = $.ajax({ 
+var geomCall = $.ajax({ 
     type: 'GET', 
     url: 'data/geom.json',
     dataType: 'json',
 });
 
-let datasetDate;
-let countryOverview, refugeePopData, countryNames, cookingPerCountry;
-let myCookingChart, myLightingChart;
-let charts = [];
-let lightingColors = {'On grid':'#8bb2cd','Torch dependent':'#bdd2c8','Kerosene dependent':'#f2d9a3','Solar dependent':'#f4c5a0'};
-let cookingColors = {'LPG/Natural Gas':'#00719a','Firewood dependent':'#7da895','Firewood/charcoal mix':'#bea487','Alternative biomass':'#e1b53d','Kerosene dependent':'#e68944'};
-let pieColors = {'cooking':cookingColors,'lighting':lightingColors};
+var datasetDate;
+var countryOverview, refugeePopData, countryNames, cookingPerCountry;
+var myCookingChart, myLightingChart;
+var charts = [];
+var lightingColors = {'On grid':'#8bb2cd','Torch dependent':'#bdd2c8','Kerosene dependent':'#f2d9a3','Solar dependent':'#f4c5a0'};
+var cookingColors = {'LPG/Natural Gas':'#00719a','Firewood dependent':'#7da895','Firewood/charcoal mix':'#bea487','Alternative biomass':'#e1b53d','Kerosene dependent':'#e68944'};
+var pieColors = {'cooking':cookingColors,'lighting':lightingColors};
 
 $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(datasetArgs, nonCampArgs,largeCampArgs,geomArgs,popArgs){
-    let nonCampData = hxlProxyToJSON(nonCampArgs[0]);
-    let largeCampData = hxlProxyToJSON(largeCampArgs[0]);
-    let geomData = topojson.feature(geomArgs[0],geomArgs[0].objects.geom);
-    let popData = hxlProxyToJSON(popArgs[0]);
+    var nonCampData = hxlProxyToJSON(nonCampArgs[0]);
+    var largeCampData = hxlProxyToJSON(largeCampArgs[0]);
+    var geomData = topojson.feature(geomArgs[0],geomArgs[0].objects.geom);
+    var popData = hxlProxyToJSON(popArgs[0]);
     refugeePopData = getRefugeesPerCountry(popData);
     countryNames = getCountryNames([nonCampData, largeCampData]);
     cookingPerCountry = getCookingPerCountry(countryNames, nonCampData, largeCampData);
@@ -487,17 +487,17 @@ $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(da
     if (showDescription=='true') $('.viz-description').show();
 
     countryOverview = function(iso3) {
-        let lighting = {};
-        let cooking = {};
-        let camps = [];
+        var lighting = {};
+        var cooking = {};
+        var camps = [];
 
         //set date
         $('.modal-footer .date').html('Data last modified '+datasetDate);
 
         nonCampData.forEach(function(row){
             if(row['#country+code']===iso3){
-                let key = 'On grid';
-                let value = Number(row['#indicator+expenditure+grid+value']);
+                var key = 'On grid';
+                var value = Number(row['#indicator+expenditure+grid+value']);
                 if(lighting[key] === undefined){
                     lighting[key] = value;
                 } else {
@@ -572,14 +572,14 @@ $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(da
         });
     }
 
-    let campOverview = function(campname, id){
-        let camp = {'name':campname, 'id': id};
-        let lighting = {};
-        let cooking = {};
+    var campOverview = function(campname, id){
+        var camp = {'name':campname, 'id': id};
+        var lighting = {};
+        var cooking = {};
         largeCampData.forEach(function(row){
             if(row['#loc+name']===campname){
-                let key = row['#indicator+lighting+text'];
-                let value = Number(row['#indicator+expenditure+offgrid+value']);
+                var key = row['#indicator+lighting+text'];
+                var value = Number(row['#indicator+expenditure+offgrid+value']);
                 camp.pop = Number(row['#population+num']);
                 if(lighting[key] === undefined){
                     lighting[key] = value;
@@ -603,15 +603,15 @@ $.when(datasetCall, nonCampCall,largeCampCall,geomCall,popCall).then(function(da
         buildModalInfo(camp);
     }
 
-    let subCountryOverview = function(iso3){
-        let noncamp = {'name':'Non-camp', 'id':0};
-        let lighting = {};
-        let cooking = {};
+    var subCountryOverview = function(iso3){
+        var noncamp = {'name':'Non-camp', 'id':0};
+        var lighting = {};
+        var cooking = {};
         noncamp.pop = 0;
         nonCampData.forEach(function(row){
             if(row['#country+code']===iso3){
-                let key = 'On grid';
-                let value = Number(row['#indicator+expenditure+grid+value']);
+                var key = 'On grid';
+                var value = Number(row['#indicator+expenditure+grid+value']);
                 noncamp.pop += Math.round(row['#population+num']);
                 if(lighting[key] === undefined){
                     lighting[key] = value;
