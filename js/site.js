@@ -116,8 +116,8 @@ function mapClick(e) {
     countryOverview(iso3);
     $('#countryModal').modal('show');
 
-    cookingChart.flush();
-    lightingChart.flush();
+    myCookingChart.flush();
+    myLightingChart.flush();
 
     for (var i=0; i<charts.length; i++) {
         if(charts[i]!=undefined){
@@ -170,16 +170,16 @@ function buildModalOverview(iso3, cooking, lighting) {
     modal.find('.overview-lighting .exp-percapita span').text( getExpPerCapita(expTotalLighting, popTotal) );
 
     //pie charts
-    cookingChart = buildPieChart('cooking', cookingData, 200);
-    lightingChart = buildPieChart('lighting', lightingData, 200);
+    myCookingChart = buildPieChart('cooking', cookingData, 200);
+    myLightingChart = buildPieChart('lighting', lightingData, 200);
 }
 
 function buildModalInfo(camp, type) {
     let expTotalCooking = 0;
     let expTotalLighting = 0;
     let campCls = 'camp'+camp.id;
-    let cookingChartID = 'cooking'+camp.id+'Chart';
-    let lightingChartID = 'lighting'+camp.id+'Chart';
+    let myCookingChartID = 'cooking'+camp.id+'Chart';
+    let myLightingChartID = 'lighting'+camp.id+'Chart';
     let modal = $('#countryModal');
     if (type===undefined || type!=='') type='camp';
 
@@ -197,27 +197,27 @@ function buildModalInfo(camp, type) {
         lightingData.push([key, numFormatSF(camp.lighting[key])]);
     }
 
-    modal.find('.info .location').append('<div class="row camp '+campCls+'"><div class="col-sm-2 col-xs-12 info-labels">'+camp.name+'</div><div class="col-xs-2" id="'+ cookingChartID +'"></div><div class="col-sm-3 col-xs-4 cooking"></div><div class="col-xs-2" id="'+lightingChartID+'"></div><div class="col-sm-3 col-xs-4 lighting"></div></div>');
+    modal.find('.info .location').append('<div class="row camp '+campCls+'"><div class="col-sm-2 col-xs-12 info-labels">'+camp.name+'</div><div class="col-xs-2" id="'+ myCookingChartID +'"></div><div class="col-sm-3 col-xs-4 cooking"></div><div class="col-xs-2" id="'+myLightingChartID+'"></div><div class="col-sm-3 col-xs-4 lighting"></div></div>');
 
     //totals
     modal.find('.'+campCls+' .cooking').html( 'Exp/yr: $'+numFormat2(expTotalCooking)+'M<br>Per Cap: '+ getExpPerCapita(expTotalCooking, camp.pop) +'<br>Pop: '+ popFormat(camp.pop) );
     modal.find('.'+campCls+' .lighting').html( 'Exp/yr: $'+numFormat2(expTotalLighting)+'M<br>Per Cap: '+ getExpPerCapita(expTotalLighting, camp.pop) +'<br>Pop: '+ popFormat(camp.pop) );
 
     //pie/donut charts
-    let cookingChart, lightingChart;
+    let cookChart, lightChart;
     if (type=='camp') {
-        cookingChart = buildSquareChart('cooking'+camp.id, cookingData, 70, false);
-        lightingChart = buildSquareChart('lighting'+camp.id, lightingData, 70, false);
+        cookChart = buildSquareChart('cooking'+camp.id, cookingData, 70, false);
+        lightChart = buildSquareChart('lighting'+camp.id, lightingData, 70, false);
     }
     else { //non-camp
-        cookingChart = buildPieChart('cooking'+camp.id, cookingData, 70, false);
-        lightingChart = buildPieChart('lighting'+camp.id, lightingData, 70, false);
+        cookChart = buildPieChart('cooking'+camp.id, cookingData, 70, false);
+        lightChart = buildPieChart('lighting'+camp.id, lightingData, 70, false);
         modal.find(campCls).css('border','1px solid #000');
     }
 
     //save reference to charts
-    charts.push(cookingChart);
-    charts.push(lightingChart);
+    charts.push(cookChart);
+    charts.push(lightChart);
 }
 
 function buildPieChart(title, data, height, showLegend) {
@@ -466,7 +466,7 @@ let geomCall = $.ajax({
 
 let datasetDate;
 let countryOverview, refugeePopData, countryNames, cookingPerCountry;
-let cookingChart, lightingChart;
+let myCookingChart, myLightingChart;
 let charts = [];
 let lightingColors = {'On grid':'#8bb2cd','Torch dependent':'#bdd2c8','Kerosene dependent':'#f2d9a3','Solar dependent':'#f4c5a0'};
 let cookingColors = {'LPG/Natural Gas':'#00719a','Firewood dependent':'#7da895','Firewood/charcoal mix':'#bea487','Alternative biomass':'#e1b53d','Kerosene dependent':'#e68944'};
