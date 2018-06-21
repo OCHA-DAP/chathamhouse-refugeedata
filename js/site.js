@@ -262,24 +262,26 @@ function buildPieChart(title, data, height, showLegend) {
 }
 
 function buildSquareChart(title, data, height){
-    var clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
-    var svgContainer = d3.select('#'+title+'Chart').append("svg")
-        .attr("width", height)
-        .attr("height", height);
-    var d = data[0][0];
-    var rectangle = svgContainer.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", height)
-        .attr("height", height)
-        .attr("fill", function () {
-                var colors = pieColors[clrs];
-                if(typeof d === 'object') {
-                    return colors[d.id];
-                }else {
-                    return colors[d];
-                }
-            });
+    if (data[0]!=undefined) {
+        var clrs = (title.indexOf('cooking')>-1) ? 'cooking' : 'lighting';
+        var svgContainer = d3.select('#'+title+'Chart').append("svg")
+            .attr("width", height)
+            .attr("height", height);
+        var d = data[0][0];
+        var rectangle = svgContainer.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", height)
+            .attr("height", height)
+            .attr("fill", function () {
+                    var colors = pieColors[clrs];
+                    if(typeof d === 'object') {
+                        return colors[d.id];
+                    }else {
+                        return colors[d];
+                    }
+                });
+    }
 }
 
 function buildDonutChart(title, data, height, showLegend) {
